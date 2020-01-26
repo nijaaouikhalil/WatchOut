@@ -1,93 +1,52 @@
-# A PyTorch implementation of a YOLO v3 Object Detector
-
-[UPDATE] : This repo serves as a driver code for my research. I just graduated college, and am very busy looking for research internship / fellowship roles before eventually applying for a masters. I won't have the time to look into issues for the time being. Thank you.
+# WatchOut
 
 
-This repository contains code for a object detector based on [YOLOv3: An Incremental Improvement](https://pjreddie.com/media/files/papers/YOLOv3.pdf), implementedin PyTorch. The code is based on the official code of [YOLO v3](https://github.com/pjreddie/darknet), as well as a PyTorch 
-port of the original code, by [marvis](https://github.com/marvis/pytorch-yolo2). One of the goals of this code is to improve
-upon the original port by removing redundant parts of the code (The official code is basically a fully blown deep learning 
-library, and includes stuff like sequence models, which are not used in YOLO). I've also tried to keep the code minimal, and 
-document it as well as I can. 
-
-### Tutorial for building this detector from scratch
-If you want to understand how to implement this detector by yourself from scratch, then you can go through this very detailed 5-part tutorial series I wrote on Paperspace. Perfect for someone who wants to move from beginner to intermediate pytorch skills. 
-
-[Implement YOLO v3 from scratch](https://blog.paperspace.com/how-to-implement-a-yolo-object-detector-in-pytorch/)
-
-As of now, the code only contains the detection module, but you should expect the training module soon. :) 
 
 ## Requirements
-1. Python 3.5
+1. Python 3.6
 2. OpenCV
 3. PyTorch 0.4
+4. TensorFlow==1.13.1
+5. yolov3wights: https://pjreddie.com/media/files/yolov3.weights (put it the the Main folder)
 
 Using PyTorch 0.3 will break the detector.
 
 
 
-## Detection Example
-
-![Detection Example](https://i.imgur.com/m2jwneng.png)
-## Running the detector
-
-### On single or multiple images
-
-Clone, and `cd` into the repo directory. The first thing you need to do is to get the weights file
-This time around, for v3, authors has supplied a weightsfile only for COCO [here](https://pjreddie.com/media/files/yolov3.weights), and place 
-
-the weights file into your repo directory. Or, you could just type (if you're on Linux)
-
-```
-wget https://pjreddie.com/media/files/yolov3.weights 
-python detect.py --images imgs --det det 
-```
+## Inspiration
+We were thinking about how we could make our city roads safer. A lot of researches show that people tend to violate less the law when a cop is watching. In fact, Montreal used to use semi-trivial cops’ cars. Those cars showed great result when it comes to tickets. So, whenever people feel cops-free they tend to violate the law. We wanted everybody to feel the presence of the cops even when they can’t see their cars (which would lead to a safer roads!). This is why we decided to develop a product called WatchOut. 
 
 
-`--images` flag defines the directory to load images from, or a single image file (it will figure it out), and `--det` is the directory
-to save images to. Other setting such as batch size (using `--bs` flag) , object threshold confidence can be tweaked with flags that can be looked up with. 
+## What it does
 
-```
-python detect.py -h
-```
+It essentially works like a traffic violation detector and reporter. In fact, we thought it would be a great if everyone can be a cop. We all agree that it’s annoying and dangerous to watch aggressive and violating traffic rules without being able to report it without losing a great amount of time and the driver might get a way with a simple consent. Instead of having to go through all that pain we decided to install a camera in the cars of some citizens. (or even taxi drivers since they move all around the city). This camera would detect traffic violations and automatically save the last 15s of the video before the violation into the cloud to finally send them to the SPVM, which then would be able to penalize them. Now it takes more than checking for cops to be ticket safe! Without knowing who has camera everyone would be more careful on roads which would decrease accidents caused by dangerous driving. Even more, those videos could be used by insurance companies and the city which would decrease court fees.
+It is a great app that many would love to have.
 
-### Speed Accuracy Tradeoff
-You can change the resolutions of the input image by the `--reso` flag. The default value is 416. Whatever value you chose, rememeber **it should be a multiple of 32 and greater than 32**. Weird things will happen if you don't. You've been warned. 
+## How we built it
 
-```
-python detect.py --images imgs --det det --reso 320
-```
+Since we are a team of two members, we decided to separate the tasks into what everybody felt the more confident in. We decided to separate the job into 3 tasks.
+Firstly, there is the first task where we had to train a model that detects traffic light stats (red, orange, green) and the back of cars. 
+Secondly, whenever a car moves on red light, we save the last 15s of the video to a specific location (for this demo). This could be sent than to the government for further process.
+Finally, logistics like the overall appearance of the app, the logo, the presentation and everything that revolves around that. The person in charge of this part was also leading the team in the sense that they were looking if everything was fitting together by making a todo list and other helpful tools like that to make sure we have everything we need.
+We used mostly Python with typescript to create our app .
+Challenges we ran into
+We ran into a lot of challenges as we expected to. Even if we had some good bases on these programming languages, some of us didn't really work with that environment in the past, so we had to learn a lot of stuff to be able to build this app. We didn't have a lot of experience in those kinds of events.
+Since we had to classify traffic lights, and cars, we needed to have access to a lot of pre-existing data to train our model. We found most of what we needed, but we couldn't get everything, so our algorithm can't take everything that we wanted in consideration.
+Then we have the obvious, the debugging problems. Since we are not very experienced in that field, we had a lot of trouble doing it. Mostly because we didn't know very well the language we were working with, but also because debugging it is very complicated compared to other programming languages that we are used to.
 
-### On Video
-For this, you should run the file, video_demo.py with --video flag specifying the video file. The video file should be in .avi format
-since openCV only accepts OpenCV as the input format. 
+## Accomplishments that I'm proud of
 
-```
-python video_demo.py --video video.avi
-```
+First, we think that our idea was great! This is the kind of app that a lot of people would like to use, and it has great potential in a market. This device might even be provided by insurance companies as it’s way of making our roads safer, which would lead to deceasing their compensation expenses. People would even ask for it as everyone would play his role to a safer city. So far, the app work only cars crossing the red light, but we can expand it to work on all traffic violations (it just needs more training). The scope of it touches everybody and it is great!
+We are also proud of our team working. Everybody was here to help, and willing to take time off their project to help for another one. The patience of the people with more experience to show how to do a BUNCH of stuff was incredible.
+We are very happy about the concept itself, it works well as a prototype. This is the kind of project that takes MONTHS to develop and we did a good part of it in a single night. We put a lot of efforts in the app and we are very proud of it. 
 
-Tweakable settings can be seen with -h flag. 
+## What we learned
 
-### Speeding up Video Inference
+We learned how to separate the tasks well, and work with each other. We learned that even thought our expectations were high at the beginning of the competition we had to be more realistic with the implementation of the algorithm. We had to drop some part because we simply didn't have time for it. In that sense, we learned to focus on the more important things.
 
-To speed video inference, you can try using the video_demo_half.py file instead which does all the inference with 16-bit half 
-precision floats instead of 32-bit float. I haven't seen big improvements, but I attribute that to having an older card 
-(Tesla K80, Kepler arch). If you have one of cards with fast float16 support, try it out, and if possible, benchmark it. 
+## What's next for WatchOut
 
-### On a Camera
-Same as video module, but you don't have to specify the video file since feed will be taken from your camera. To be precise, 
-feed will be taken from what the OpenCV, recognises as camera 0. The default image resolution is 160 here, though you can change it with `reso` flag.
+The next step for WatchOut is to get a proper training to detect all traffic violations or even crimes!! We think that there is a good concept behind our project, and it has potential value in the insurance-gouverment market. And who knows? Maybe our sponsors might be interested!  :D 
 
-```
-python cam_demo.py
-```
-You can easily tweak the code to use different weightsfiles, available at [yolo website](https://pjreddie.com/darknet/yolo/)
-
-NOTE: The scales features has been disabled for better refactoring.
-### Detection across different scales
-YOLO v3 makes detections across different scales, each of which deputise in detecting objects of different sizes depending upon whether they capture coarse features, fine grained features or something between. You can experiment with these scales by the `--scales` flag. 
-
-```
-python detect.py --scales 1,3
-```
 
 
